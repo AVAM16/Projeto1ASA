@@ -22,6 +22,7 @@ void readGraph()
 
 void findAllPossibleSquares()
 {
+  int b = 0;
 }
 
 int main()
