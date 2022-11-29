@@ -22,16 +22,23 @@ void readGraph()
 
 void findAllPossibleSquares()
 {
-  for (unsigned int a = 0; a < _N; a++) {
+  for (unsigned int a = 0; a < _N - 1; a++) {
     int height = _N - a;
-    for (int i = 0; i < _path[a]; i++) {
+    int length = _path.at(a);
+    for (int i = 0; i < length; i++) {
       for (int b = height; b > 1; b--) {
-
+        if (length - i >= b) {
+          vector<int> temp;
+          temp.push_back(a);
+          temp.push_back(i);
+          temp.push_back(b);
+          _possibleSquares.push_back(temp);
+        }
       }
     }
   }
 }
-
+/*
 int squareOverlap(vector<int> Square1, vector <int> Square2){
   int i = Square1.at(0);
   int j = Square1.at(1);
@@ -63,7 +70,7 @@ int countOptions(){
   i++;
   return i;
 }
-
+*
 int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square,int j){
   bool l;
   int i = 0;
@@ -93,7 +100,7 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
   i+=1;
   return i;
 }
-
+*/
 
 int main()
 {
