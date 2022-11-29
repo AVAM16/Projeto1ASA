@@ -7,7 +7,7 @@ using namespace std;
 
 unsigned int _N, _M;
 vector<int> _path;
-vector<array<int,3>> _possibleSquares;
+vector<vector<int>> _possibleSquares;
 
 void readGraph()
 {
@@ -31,6 +31,26 @@ void findAllPossibleSquares()
     }
   }
 }
+
+boolean squareOverlap(vector<int> Square1, vector <int> Square2){
+  int i = Square1.at(0);
+  int j = Square1.at(1);
+  int Size = Square1.at(2);
+  int i2 = Square2.at(0);
+  int j2 = Square2.at(1);
+  int Size2 = Square2.at(2);
+  while(i < i + Size){
+    while(j < j + Size){
+      if(i2 <= i < i2 + Size2 & j2 <= j < j2 + Size2){
+        return false;
+      }
+      j++;
+    }
+    i++;
+  }
+  return true;
+}
+
 
 int main()
 {
