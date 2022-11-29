@@ -32,7 +32,7 @@ void findAllPossibleSquares()
   }
 }
 
-boolean squareOverlap(vector<int> Square1, vector <int> Square2){
+int squareOverlap(vector<int> Square1, vector <int> Square2){
   int i = Square1.at(0);
   int j = Square1.at(1);
   int Size = Square1.at(2);
@@ -42,13 +42,26 @@ boolean squareOverlap(vector<int> Square1, vector <int> Square2){
   while(i < i + Size){
     while(j < j + Size){
       if(i2 <= i < i2 + Size2 & j2 <= j < j2 + Size2){
-        return false;
+        return -1;
       }
       j++;
     }
     i++;
   }
-  return true;
+  return 0;
+}
+
+int countOptions(){
+  vector<vector<int>> _auxiliarvector;
+  for(vector<int> Square1: _possibleSquares){
+    _auxiliarvector.push_back(Square1);
+  }
+
+
+}
+
+int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square){
+
 }
 
 
