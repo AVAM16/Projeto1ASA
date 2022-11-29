@@ -52,16 +52,45 @@ int squareOverlap(vector<int> Square1, vector <int> Square2){
 }
 
 int countOptions(){
+  int i = 0;
+  int j = 0;
   vector<vector<int>> _auxiliarvector;
   for(vector<int> Square1: _possibleSquares){
     _auxiliarvector.push_back(Square1);
+    j++;
+    i += countOptionsRecursive(_auxiliarvector,Square1,j) +1;
   }
-
-
+  return i;
 }
 
-int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square){
-
+int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square,int j){
+  bool l;
+  int i = 0;
+  int k = 0;
+  vector<vector<int>> _auxiliarvector2;
+  for(vector<int> Square1: _possibleSquares){
+    if(j> k){
+      k++;
+    }
+    else{
+      for(vector<int> Square2: _auxiliarvector2){
+        if(squareOverlap(Square1,Square2)){
+          l = false;
+          break;
+        }
+        else{
+          l = true;
+        }
+      }
+      if(l){
+        _auxiliarvector2.push_back(Square1);
+        j++;
+        i += countOptionsRecursive(_auxiliarvector2,Square1,j) +1;
+      }
+    }
+  }
+  i+=1;
+  return i;
 }
 
 
