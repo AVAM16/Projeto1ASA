@@ -60,6 +60,7 @@ int countOptions(){
     j++;
     i += countOptionsRecursive(_auxiliarvector,Square1,j) +1;
   }
+  i++;
   return i;
 }
 
@@ -68,6 +69,7 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
   int i = 0;
   int k = 0;
   vector<vector<int>> _auxiliarvector2;
+  _auxiliarvector2.push_back(Square);
   for(vector<int> Square1: _possibleSquares){
     if(j> k){
       k++;
@@ -83,7 +85,6 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
         }
       }
       if(l){
-        _auxiliarvector2.push_back(Square1);
         j++;
         i += countOptionsRecursive(_auxiliarvector2,Square1,j) +1;
       }
