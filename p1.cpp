@@ -38,26 +38,25 @@ void findAllPossibleSquares()
     }
   }
 }
-/*
-int squareOverlap(vector<int> Square1, vector <int> Square2){
-  int i = Square1.at(0);
-  int j = Square1.at(1);
-  int Size = Square1.at(2);
-  int i2 = Square2.at(0);
-  int j2 = Square2.at(1);
+
+int squareOverlap(vector<int> Square1, vector <int> Square2)
+{
+  int n1 = Square1.at(0);
+  int m1 = Square1.at(1);
+  int Size1 = Square1.at(2);
+  int n2 = Square2.at(0);
+  int m2 = Square2.at(1);
   int Size2 = Square2.at(2);
-  while(i < i + Size){
-    while(j < j + Size){
-      if(i2 <= i < i2 + Size2 & j2 <= j < j2 + Size2){
-        return -1;
+  for (int i = n1; i < n1 + Size1; i++) {
+    for (int j = m1; j < m1 + Size1; j++) {
+      if (i <= n2 + Size2 && i >= n2 && j <= m2 + Size2 && j >= m2) {
+        return 1;
       }
-      j++;
     }
-    i++;
   }
   return 0;
 }
-
+/*
 int countOptions(){
   int i = 0;
   int j = 0;
