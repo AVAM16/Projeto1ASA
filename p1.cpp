@@ -25,7 +25,7 @@ void findAllPossibleSquares()
   for (unsigned int a = 0; a < _N - 1; a++) {
     int height = _N - a;
     int length = _path.at(a);
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length - 1; i++) {
       for (int b = height; b > 1; b--) {
         if (length - i >= b) {
           vector<int> temp;
