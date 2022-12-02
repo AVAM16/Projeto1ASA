@@ -69,15 +69,15 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
   for(vector<int> Square1: _possibleSquares){
     if(j <= k){
       for(vector<int> Square2: _auxiliarvector2){
-        cout << Square1.at(0) << Square1.at(1) << Square1.at(2) << endl;
-        cout << Square2.at(0) << Square2.at(1) << Square2.at(2) << endl;
+        //cout << Square1.at(0) << Square1.at(1) << Square1.at(2) << endl;
+        //cout << Square2.at(0) << Square2.at(1) << Square2.at(2) << endl;
         if(squareOverlap(Square2,Square1) == 1){
           l = false;
-          cout << "errou" << endl;
+          //cout << "errou" << endl;
           break;
         }
         else{
-          cout << "acertou" << endl;
+          //cout << "acertou" << endl;
           l = true;
         }
       }
@@ -100,7 +100,7 @@ int countOptions(){
     _auxiliarvector.clear();
     _auxiliarvector.push_back(Square1);
     j++;
-    cout << j << endl;
+    //cout << j << endl;
     i += countOptionsRecursive(_auxiliarvector,Square1,j);
   }
   return i;
