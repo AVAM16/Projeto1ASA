@@ -56,33 +56,20 @@ int squareOverlap(vector<int> Square1, vector <int> Square2)
   }
   return 0;
 }
-/*
-int countOptions(){
-  int i = 0;
-  int j = 0;
-  vector<vector<int>> _auxiliarvector;
-  for(vector<int> Square1: _possibleSquares){
-    _auxiliarvector.push_back(Square1);
-    j++;
-    i += countOptionsRecursive(_auxiliarvector,Square1,j) +1;
-  }
-  i++;
-  return i;
-}
-*
+
 int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square,int j){
-  bool l;
-  int i = 0;
+  bool l = true;
+  int i = 1;
   int k = 0;
   vector<vector<int>> _auxiliarvector2;
+  for(vector<int> SquareTemp : auxiliarvector){
+    _auxiliarvector2.push_back(SquareTemp);
+  }
   _auxiliarvector2.push_back(Square);
   for(vector<int> Square1: _possibleSquares){
-    if(j> k){
-      k++;
-    }
-    else{
+    if(j <= k){
       for(vector<int> Square2: _auxiliarvector2){
-        if(squareOverlap(Square1,Square2)){
+        if(squareOverlap(Square1,Square2) == 1){
           l = false;
           break;
         }
@@ -91,19 +78,37 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
         }
       }
       if(l){
+        cout << i << endl;
         j++;
-        i += countOptionsRecursive(_auxiliarvector2,Square1,j) +1;
+        i += countOptionsRecursive(_auxiliarvector2,Square1,j);
       }
     }
+    k++;
+    l = true;
   }
-  i+=1;
   return i;
 }
-*/
+
+int countOptions(){
+  int i = 1;
+  int j = 0;
+  vector<vector<int>> _auxiliarvector;
+  for(vector<int> Square1: _possibleSquares){
+    _auxiliarvector.push_back(Square1);
+    j++;
+    i += countOptionsRecursive(_auxiliarvector,Square1,j) + 1;
+  }
+  return i;
+}
+
+
+
 
 int main()
 {
   readGraph();
   findAllPossibleSquares();
+  int i = countOptions();
+  cout << i << endl;
   return 0;
 }
