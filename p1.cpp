@@ -49,7 +49,7 @@ int squareOverlap(vector<int> Square1, vector <int> Square2)
   int Size2 = Square2.at(2);
   for (int i = n1; i < n1 + Size1; i++) {
     for (int j = m1; j < m1 + Size1; j++) {
-      if (i <= n2 + Size2 && i >= n2 && j <= m2 + Size2 && j >= m2) {
+      if ((i <= n2 + Size2 && i >= n2 && j < m2 + Size2 && j > m2)) {
         return 1;
       }
     }
@@ -71,9 +71,11 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
       for(vector<int> Square2: _auxiliarvector2){
         if(squareOverlap(Square1,Square2) == 1){
           l = false;
+          cout << "errou" << endl;
           break;
         }
         else{
+          cout << "acertou" << endl;
           l = true;
         }
       }
@@ -96,7 +98,8 @@ int countOptions(){
   for(vector<int> Square1: _possibleSquares){
     _auxiliarvector.push_back(Square1);
     j++;
-    i += countOptionsRecursive(_auxiliarvector,Square1,j) + 1;
+    cout << j << endl;
+    i += countOptionsRecursive(_auxiliarvector,Square1,j);
   }
   return i;
 }
