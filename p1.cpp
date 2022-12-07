@@ -26,14 +26,12 @@ void findAllPossibleSquares()
     int height = _N - a;
     int length = _path.at(a);
     for (int i = 0; i < length - 1; i++) {
-      for (int b = height; b > 1; b--) {
-        if (length - i >= b) {
-          vector<int> temp;
-          temp.push_back(a);
-          temp.push_back(i);
-          temp.push_back(b);
-          _possibleSquares.push_back(temp);
-        }
+      for (int b = min(height, length - i); b > 1; b--) {
+        vector<int> temp;
+        temp.push_back(a);
+        temp.push_back(i);
+        temp.push_back(b);
+        _possibleSquares.push_back(temp);
       }
     }
   }
