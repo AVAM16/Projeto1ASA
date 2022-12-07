@@ -47,14 +47,13 @@ int squareOverlap(vector<int> Square1, vector <int> Square2)
   int n2 = Square2.at(0);
   int m2 = Square2.at(1);
   int Size2 = Square2.at(2);
-  for (int i = n1; i < n1 + Size1; i++) {
-    for (int j = m1; j < m1 + Size1; j++) {
-      if (((i < n2 + Size2 && i >= n2) && (j < m2 + Size2 && j >= m2))) {
-        return 1;
-      }
-    }
+  if (m1 > m2 + (Size2-1) || m2 > m1 + (Size1 - 1)){
+    return 0;
   }
-  return 0;
+  if (n1 + (Size1 - 1) < n2 || n2 + (Size2 - 1) < n1){
+    return 0;
+  }
+  return 1;
 }
 
 int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square,int j){
