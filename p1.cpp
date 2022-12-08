@@ -7,7 +7,7 @@ using namespace std;
 
 unsigned int _N, _M;
 vector<int> _path;
-vector<vector<int>> _possibleSquares;
+vector<array<int, 3>> _possibleSquares;
 
 void readGraph()
 {
@@ -27,17 +27,17 @@ void findAllPossibleSquares()
     int length = _path.at(a);
     for (int i = 0; i < length - 1; i++) {
       for (int b = min(height, length - i); b > 1; b--) {
-        vector<int> temp;
-        temp.push_back(a);
-        temp.push_back(i);
-        temp.push_back(b);
+        array<int, 3> temp;
+        temp[0] = a;
+        temp[1] = i;
+        temp[2] = b;
         _possibleSquares.push_back(temp);
       }
     }
   }
 }
 
-int squareOverlap(vector<int> Square1, vector <int> Square2)
+int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
 {
   int n1 = Square1.at(0);
   int m1 = Square1.at(1);
@@ -54,18 +54,18 @@ int squareOverlap(vector<int> Square1, vector <int> Square2)
   return 1;
 }
 
-int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square,int j){
+int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Square,int j){
   bool l = true;
   int i = 1;
   int k = 0;
-  vector<vector<int>> _auxiliarvector2;
-  for(vector<int> SquareTemp : auxiliarvector){
+  vector<array<int, 3>> _auxiliarvector2;
+  for(array<int, 3> SquareTemp : auxiliarvector){
     _auxiliarvector2.push_back(SquareTemp);
   }
   _auxiliarvector2.push_back(Square);
-  for(vector<int> Square1: _possibleSquares){
+  for(array<int, 3> Square1: _possibleSquares){
     if(j <= k){
-      for(vector<int> Square2: _auxiliarvector2){
+      for(array<int, 3> Square2: _auxiliarvector2){
         //cout << Square1.at(0) << Square1.at(1) << Square1.at(2) << endl;
         //cout << Square2.at(0) << Square2.at(1) << Square2.at(2) << endl;
         if(squareOverlap(Square2,Square1) == 1){
@@ -92,8 +92,8 @@ int countOptionsRecursive(vector<vector<int>> auxiliarvector, vector<int> Square
 int countOptions(){
   int i = 1;
   int j = 0;
-  vector<vector<int>> _auxiliarvector;
-  for(vector<int> Square1: _possibleSquares){
+  vector<array<int, 3>> _auxiliarvector;
+  for(array<int,3> Square1: _possibleSquares){
     _auxiliarvector.clear();
     _auxiliarvector.push_back(Square1);
     j++;
