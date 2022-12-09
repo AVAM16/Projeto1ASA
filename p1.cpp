@@ -65,7 +65,7 @@ int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Sq
   } */
   /* _auxiliarvector2.push_back(Square); */
   for(array<int, 3> Square1: _possibleSquares){
-    if(j <= k){
+    if(j < k){
       for(array<int, 3> Square2: auxiliarvector){
         //cout << Square1.at(0) << Square1.at(1) << Square1.at(2) << endl;
         //cout << Square2.at(0) << Square2.at(1) << Square2.at(2) << endl;
@@ -116,8 +116,9 @@ int main()
 {
   readGraph();
   findAllPossibleSquares();
+  cout << _possibleSquares.size() << endl;
   int i = countOptions();
-  cout << i << endl;
+  //cout << i << endl;
   //vector<int> v1 = _possibleSquares.at(1);
   //vector<int> v2 = _possibleSquares.at(7);
   //cout << squareOverlap(v2, v1) << endl;
