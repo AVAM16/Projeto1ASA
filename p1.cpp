@@ -79,6 +79,7 @@ int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Sq
     }
     k++;
     l = true;
+    
   }
   auxiliarvector.pop_back();
   return i;
