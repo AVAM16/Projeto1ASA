@@ -1,5 +1,4 @@
 #include <iostream>
-#include <list>
 #include <vector>
 #include <array>
 
@@ -12,11 +11,13 @@ vector<array<int, 3>> _possibleSquares;
 void readGraph()
 {
   cin >> _N >> _M;
+  _path.reserve(_N);
+  _possibleSquares.reserve(_N * _M);
   for (size_t i = 0; i < _N; i++)
   {
     int a;
     cin >> a;
-    _path.push_back(a);
+    _path.emplace_back(a);
   }
 }
 
@@ -31,7 +32,7 @@ void findAllPossibleSquares()
         temp[0] = a;
         temp[1] = i;
         temp[2] = b;
-        _possibleSquares.push_back(temp);
+        _possibleSquares.emplace_back(temp);
       }
     }
   }
@@ -58,11 +59,10 @@ int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Sq
   bool l = true;
   int i = 1;
   int k = 0;
-  auxiliarvector.push_back(Square);
+  auxiliarvector.emplace_back(Square);
   for(array<int, 3> Square1: _possibleSquares){
     if(j <= k){
       j++;
-/*       cout << Square1.at(0) << Square1.at(1) << Square1.at(2) << endl; */
       for(array<int, 3> Square2: auxiliarvector){
         if(squareOverlap(Square2,Square1) == 1){
           l = false;
@@ -72,8 +72,6 @@ int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Sq
         }
       }
       if(l){
-        /* cout << "acertou" << endl;
-        cout << Square1.at(0) << Square1.at(1) << Square1.at(2) << endl; */
         i += countOptionsRecursive(auxiliarvector,Square1,j);
       }
     }
@@ -89,16 +87,20 @@ int countOptions(){
   int i = 0;
   int j = 0;
   vector<array<int, 3>> _auxiliarvector;
-  for(int p : _path){
-    if(p != 0){
-      i=1;
-      break;
-    }
-  }
+  _auxiliarvector.reserve(_N * _M);
   for(array<int,3> Square1: _possibleSquares){
     j++;
     i += countOptionsRecursive(_auxiliarvector,Square1,j);
   }
+  if (i == 0) {
+    for(int p : _path){
+      if(p != 0){
+        return 1;
+      }
+    }
+    return 0;
+  }
+  i += 1;
   return i;
 }
 
@@ -109,11 +111,7 @@ int main()
 {
   readGraph();
   findAllPossibleSquares();
-  cout << _possibleSquares.size() << endl;
   int i = countOptions();
   cout << i << endl;
-  //vector<int> v1 = _possibleSquares.at(1);
-  //vector<int> v2 = _possibleSquares.at(7);
-  //cout << squareOverlap(v2, v1) << endl;
   return 0;
 }
