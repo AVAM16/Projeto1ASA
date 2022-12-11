@@ -17,7 +17,7 @@ void readGraph()
   {
     int a;
     cin >> a;
-    _path.emplace_back(a);
+    _path.push_back(a);
   }
 }
 
@@ -32,7 +32,7 @@ void findAllPossibleSquares()
         temp[0] = a;
         temp[1] = i;
         temp[2] = b;
-        _possibleSquares.emplace_back(temp);
+        _possibleSquares.push_back(temp);
       }
     }
   }
@@ -59,7 +59,7 @@ int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Sq
   bool l = true;
   int i = 1;
   int k = 0;
-  auxiliarvector.emplace_back(Square);
+  auxiliarvector.push_back(Square);
   for(array<int, 3> Square1: _possibleSquares){
     if(j <= k){
       j++;
