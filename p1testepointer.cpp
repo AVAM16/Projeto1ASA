@@ -61,7 +61,7 @@ int countOptions(){
   powerSet.push_back(emptyArray);
 
   for (array<int,3> square : _possibleSquares) {
-    int a;
+    int a = 0;
     for (vector<array<int,3>> *aux : powerSet){
       for (array<int,3> square2 : *aux){
         if (squareOverlap(square, square2) == 1){
