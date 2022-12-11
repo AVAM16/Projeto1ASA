@@ -63,22 +63,21 @@ int countOptions(){
   for (array<int,3> square : _possibleSquares) {
     unsigned int tempSize = powerSet.size();
     int a;
-    for (size_t j = 0; j < tempSize; j++){
-      a = 0;
-      for (array<int,3> square2 : powerSet[j]){
+    for (vector<array<int,3>> aux : powerSet){
+      for (array<int,3> square2 : aux){
         if (squareOverlap(square, square2) == 1){
           a = 1;
           break;
         }
       }
       if(a == 0) {
-        vector<array<int,3>> auxiliary = powerSet[j];
+        vector<array<int,3>> auxiliary = aux;
         auxiliary.push_back(square);
         powerSet.push_back(auxiliary);
         i ++;
       }
     }
-  }   
+  }
 
   if (i == 0) {
     for(int p : _path){
