@@ -10,10 +10,9 @@ using namespace std;
 unsigned int _N, _M;
 vector<int> _path; 
 
-int readGraph()
+void readGraph()
 {
   cin >> _N >> _M;
-  int path[_N];
   for (size_t i = 0; i < _N; i++)
   {
     int a;
@@ -22,11 +21,11 @@ int readGraph()
   }
 }
 
-vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m)
+vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m, vector<int> path)
 {
   vector<array<int,3>> possibleSquares;
   int height = _N - n;
-  int length = _path[n];
+  int length = path[n];
   for (int b = min(height, length); b > 0; b--) {
     array<int, 3> temp;
     temp[0] = n;
@@ -55,12 +54,30 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
   return 1;
 }
 
-void findOptions(){
-  vector<array<int,3>> squares = findAllPossibleSquaresPoint(0, 0);
+unsigned long long findOptions(vector<int> path){
+  unsigned long long counter = 1;
+  vector<int> path2;
+  vector<array<int,3>> squares = findAllPossibleSquaresPoint(0, 0, path);
   vector<array<int,3>> aux;
   for (array<int,3> square : squares) {
-    
+    for(int i = 0;i < square[2];i++){
+      path2[square[0]] = path[square[2]] - square[2];
+    }
+    if(path2[0] == 0){
+      if(path2.size() == 1){
+        return counter;
+      }
+      else{
+        while(path2[0]== 0){
+        path2.erase(path2.begin());
+        }
+        findOptions(path2);
+      }
+    }
+    counter += findOptions(path2);
+    path2 = path;
   }
+  return counter;
 }
 
 
@@ -118,11 +135,12 @@ void findOptions(){
 
 int main()
 {
+  unsigned long long counter;
   using namespace std::chrono;
   high_resolution_clock::time_point t1 = high_resolution_clock::now();
   readGraph();
-  findOptions();
-  //cout << i << endl;
+  counter = findOptions(_path);
+  cout << counter << endl;
   high_resolution_clock::time_point t2 = high_resolution_clock::now();
   duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
   std::cout << "It took me " << time_span.count() << " seconds.";
