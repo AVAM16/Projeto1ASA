@@ -25,7 +25,7 @@ vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m, vector<int> path)
 {
   vector<array<int,3>> possibleSquares;
   int height = _N - n;
-  int length = path[n];
+  int length = path[n] - m;
   for (int b = min(height, length); b > 0; b--) {
     array<int, 3> temp;
     temp[0] = n;
@@ -56,26 +56,36 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
 
 unsigned long long findOptions(vector<int> path){
   unsigned long long counter = 1;
-  vector<int> path2;
+  vector<int> path2(path);
   vector<array<int,3>> squares = findAllPossibleSquaresPoint(0, 0, path);
   vector<array<int,3>> aux;
   for (array<int,3> square : squares) {
+    cout << square[0] << square[1] << square[2] << endl;
     for(int i = 0;i < square[2];i++){
-      path2[square[0]] = path[square[2]] - square[2];
-    }
-    if(path2[0] == 0){
-      if(path2.size() == 1){
-        return counter;
-      }
-      else{
-        while(path2[0]== 0){
-        path2.erase(path2.begin());
+      int aux = path[i] - square[2];
+      cout << path[i] << endl;
+      path2.at(i) = aux;
+      cout << path2.at(i) << endl;
+      if(path2.at(i) == 0){
+        if(path2.size() == 1){
+          cout << "oi" << endl;
+          return counter;
         }
-        findOptions(path2);
+        else{
+          while(path2[0]== 0){
+            if(path2.size() == 1){
+              return counter;
+            }
+            path2.erase(path2.begin());
+          }
+          findOptions(path2);
+        }
+      counter += findOptions(path2);
+      path2 = path;
       }
+    
+    
     }
-    counter += findOptions(path2);
-    path2 = path;
   }
   return counter;
 }
