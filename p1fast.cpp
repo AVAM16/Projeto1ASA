@@ -24,7 +24,7 @@ void readGraph()
 vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m, vector<int> path)
 {
   vector<array<int,3>> possibleSquares;
-  int height = _N - n;
+  int height = path.size() - n;
   int length = path[n] - m;
   for (int b = min(height, length); b > 0; b--) {
     array<int, 3> temp;
@@ -32,9 +32,6 @@ vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m, vector<int> path)
     temp[1] = m;
     temp[2] = b;
     possibleSquares.push_back(temp);
-  }
-  for(int i : path){
-    cout << i << " linha" << endl;
   }
   return possibleSquares;
 }
@@ -61,20 +58,14 @@ unsigned long long findOptions(vector<int> path){
   unsigned long long counter = 1;
   vector<int> path2(path);
   vector<array<int,3>> squares = findAllPossibleSquaresPoint(0, 0, path);
-  for(array<int,3> s : squares){
-    cout << s[0] << s[1] << s[2] << endl;
-  }
   vector<array<int,3>> aux;
-  cout << squares.size() << endl;
   if(squares.size() != 0){
     for (array<int,3> square : squares) {
-      cout << "oi2" << endl;
       for(int i = 0;i < square[2];i++){
         int aux = path[i] - square[2];
         path2.at(i-k) = aux;
         if(path2.at(i-k) == 0){
           if(path2.size() == 1){
-            counter += findOptions(path2);
           }
           else{
             path2.erase(path2.begin());
@@ -82,10 +73,12 @@ unsigned long long findOptions(vector<int> path){
           }
         }   
       }
-      counter += findOptions(path2);
+      findOptions(path2);
       path2 = path;
       k=0;
+      counter++;
     }
+
   }
   return counter;
 }
