@@ -55,17 +55,21 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
 
 unsigned long long findOptions(vector<int> path){
   int k = 0;
-  unsigned long long counter = 1;
+  unsigned long long counter = 0;
   vector<int> path2(path);
   vector<array<int,3>> squares = findAllPossibleSquaresPoint(0, 0, path);
   vector<array<int,3>> aux;
   if(squares.size() != 0){
     for (array<int,3> square : squares) {
+      cout << square[0] << square[1] << square[2] << endl;
       for(int i = 0;i < square[2];i++){
         int aux = path[i] - square[2];
         path2.at(i-k) = aux;
         if(path2.at(i-k) == 0){
           if(path2.size() == 1){
+            cout << "finish" << endl;
+            counter+=1;
+            continue;
           }
           else{
             path2.erase(path2.begin());
@@ -73,10 +77,9 @@ unsigned long long findOptions(vector<int> path){
           }
         }   
       }
-      findOptions(path2);
+      counter += findOptions(path2);
       path2 = path;
       k=0;
-      counter++;
     }
 
   }
@@ -140,8 +143,8 @@ int main()
 {
   unsigned long long counter;
   using namespace std::chrono;
-  high_resolution_clock::time_point t1 = high_resolution_clock::now();
   readGraph();
+  high_resolution_clock::time_point t1 = high_resolution_clock::now();
   counter = findOptions(_path);
   cout << counter << endl;
   high_resolution_clock::time_point t2 = high_resolution_clock::now();
