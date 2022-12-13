@@ -53,11 +53,18 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
   return 1;
 }
 
+int maxValue(vector<int> path){
+  int value;
+  value = *path.max_element(path.begin(),path.end());
+  return value;
+}
+
 unsigned long long findOptions(vector<int> path){
   int x = 0;
   int k = 0;
   unsigned long long counter = 0;
   vector<int> path2(path);
+  x = maxValue(path);
   vector<array<int,3>> squares = findAllPossibleSquaresPoint(x, path[x], path);
   vector<array<int,3>> aux;
   if(squares.size() != 0){
