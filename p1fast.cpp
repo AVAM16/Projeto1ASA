@@ -5,12 +5,13 @@
 #include <ratio>
 #include <chrono>
 #include <bits/stdc++.h>
+#include <map>
 
 using namespace std;
 
 unsigned int _N, _M;
 vector<int> _path; 
-vector<vector<int>> map = {};
+map<vector<int>,int> Map = {};
 
 void readGraph()
 {
@@ -38,23 +39,29 @@ vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m, vector<int> path)
   return possibleSquares;
 }
 
-vector<array<int,3>> findAllPossibleSquares2(vector<int> path)
+vector<array<int,3>> findAllPossibleSquaresPoint2(int n, int m, vector<int> path)
 {
   vector<array<int,3>> possibleSquares;
-  int n = path.size();
-  for (unsigned int a = n - 1; a >= 0; a--) {
-    int height = n - a;
-    int length = path.at(a);
-    for (int i = length - 1; i >= 0; i--) {
-      for (int b = min(height, length - i); b > 0; b--) {
-        array<int, 3> temp;
-        temp[0] = a;
-        temp[1] = i;
-        temp[2] = b;
-        possibleSquares.push_back(temp);
-      }
+  if(path.size()==1 && path[0] == 0){
+    return {};
+  }
+  int a = 1;
+  while (a > 0){
+    if(path[n-(a-1)] >= m+1 && path[n-(a-1)] >= a){
+      array<int, 3> temp;
+      temp[0] = n;
+      temp[1] = m;
+      temp[2] = a;
+      possibleSquares.push_back(temp);
+      a++;
+      cout << "noice: " << temp[0] << temp[1] << temp[2] << endl;
+      
+    }
+    else{
+      a = -1;
     }
   }
+  return possibleSquares;
 }
 
 
@@ -78,18 +85,26 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
 int maxValue(vector<int> path){
   int value;
   value = *max_element(path.begin(), path.end());
-  return value;
+  for(int i = path.size(); i > 0;i--){
+    if(path[i-1] == value){
+/*       cout << value << "  oi  " << i-1 << endl; */
+      return i-1;
+    }
+  }
+
+  return 124;
+}
+
+/* void addToMap(vector<int> path,int combinations){
+  Map.insert(pair<vector<int>,int>(path,combinations));
 }
 
 int encontraNoMapa(vector<int> path){
-  for(int i = map.size()-1;i > 0;i--){
-    if(path == map[i]){
-      return map[i][2];
-    }
+  if(Map[path] != 0){
+    return Map[path];
   }
   return -1;
-
-}
+} */
 
 unsigned long long findOptions(vector<int> path){
   int x = 0;
@@ -97,92 +112,49 @@ unsigned long long findOptions(vector<int> path){
   unsigned long long counter = 0;
   vector<int> path2(path);
   x = maxValue(path);
-  vector<array<int,3>> squares = findAllPossibleSquaresPoint(x, path[x], path);
+  vector<array<int,3>> squares = findAllPossibleSquaresPoint2(x, path[x]-1, path);
   vector<array<int,3>> aux;
   if(squares.size() != 0){
     for (array<int,3> square : squares) {
-      cout << square[0] << square[1] << square[2] << endl;
       for(int i = 0;i < square[2];i++){
         int aux = path[x-i] - square[2];
-        path2.at(x-i-k) = aux;
-        if(path2.at(x-i-k) == 0){
-          if(path2.size() == 1){
-            cout << "finish" << endl;
-            counter++;
-          }
-          else{
-            path2.erase(path2.begin());
-            k += 1;
-          }
-        }   
+        path2.at(x-i) = aux;
+        for(int j : path2){
+          cout << j;
+        }
+        cout << endl;
+        cout << "i: " << i << " x: " << x << " path do x: " << path[x] << endl;
+        for(int h : path2){
+          k+=h;
+        }
+        if(k == 0){
+          counter++;
+          cout << "finish" << endl;
+          return counter;
+        }
+        k=0;
       }
-      counter += findOptions(path2);
+      int aux = findOptions(path2);
+      counter += aux;
       path2 = path;
-      k=0;
     }
-  }
-  if(path2.size() != 1 && path2.at(0) == 0){
-    path2.erase(path2.begin());
-    counter += findOptions(path2);
   }
   return counter;
 }
 
 
-// int countOptionsRecursive(vector<array<int, 3>> auxiliarvector, array<int, 3> Square,int j){
-//   bool l = true;
-//   int i = 1;
-//   int k = 0;
-//   auxiliarvector.push_back(Square);
-//   for(array<int, 3> Square1: _possibleSquares){
-//     if(j <= k){
-//       j++;
-//       for(array<int, 3> Square2: auxiliarvector){
-//         if(squareOverlap(Square2,Square1) == 1){
-//           l = false;
-//           break;
-//         }
-//         else{
-//         }
-//       }
-//       if(l){
-//         i += countOptionsRecursive(auxiliarvector,Square1,j);
-//       }
-//     }
-//     k++;
-//     l = true;
-    
-//   }
-//   auxiliarvector.pop_back();
-//   return i;
-// }
-
-// int countOptions(){
-//   int i = 0;
-//   int j = 0;
-//   vector<array<int, 3>> _auxiliarvector;
-//   _auxiliarvector.reserve(_N * _M);
-//   for(array<int,3> Square1: _possibleSquares){
-//     j++;
-//     i += countOptionsRecursive(_auxiliarvector,Square1,j);
-//   }
-//   if (i == 0) {
-//     for(int p : _path){
-//       if(p != 0){
-//         return 1;
-//       }
-//     }
-//     return 0;
-//   }
-//   i += 1;
-//   return i;
-// }
-
-
-
-
 int main()
 {
+  //map<int, int> gquiz1;
+  // insert elements in random order
+  /* gquiz1.insert(pair<int, int>(1, 40));
+  gquiz1.insert(pair<int, int>(2, 30));
+  gquiz1.insert(pair<int, int>(3, 60));
+  gquiz1.insert(pair<int, int>(4, 20));
+  gquiz1.insert(pair<int, int>(5, 50));
+  gquiz1.insert(pair<int, int>(6, 50));
+  cout << gquiz1[7] << endl;  */
+ /*  findAllPossibleSquaresPoint2(2,2,{2,2,3,2}); */
   unsigned long long counter;
   using namespace std::chrono;
   readGraph();
