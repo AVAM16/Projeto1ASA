@@ -36,6 +36,26 @@ vector<array<int,3>> findAllPossibleSquaresPoint(int n, int m, vector<int> path)
   return possibleSquares;
 }
 
+vector<array<int,3>> findAllPossibleSquares2(vector<int> path)
+{
+  vector<array<int,3>> possibleSquares;
+  int n = path.size();
+  for (unsigned int a = n - 1; a >= 0; a--) {
+    int height = n - a;
+    int length = path.at(a);
+    for (int i = length - 1; i >= 0; i--) {
+      for (int b = min(height, length - i); b > 0; b--) {
+        array<int, 3> temp;
+        temp[0] = a;
+        temp[1] = i;
+        temp[2] = b;
+        possibleSquares.push_back(temp);
+      }
+    }
+  }
+}
+
+
 int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
 {
   int n1 = Square1.at(0);
