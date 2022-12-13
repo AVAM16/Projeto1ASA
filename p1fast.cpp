@@ -73,23 +73,30 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
   return 1;
 }
 
+int maxValue(vector<int> path){
+  int value;
+  value = *path.max_element(path.begin(),path.end());
+  return value;
+}
+
 unsigned long long findOptions(vector<int> path){
+  int x = 0;
   int k = 0;
   unsigned long long counter = 0;
   vector<int> path2(path);
-  vector<array<int,3>> squares = findAllPossibleSquaresPoint(0, 0, path);
+  x = maxValue(path);
+  vector<array<int,3>> squares = findAllPossibleSquaresPoint(x, path[x], path);
   vector<array<int,3>> aux;
   if(squares.size() != 0){
     for (array<int,3> square : squares) {
       cout << square[0] << square[1] << square[2] << endl;
       for(int i = 0;i < square[2];i++){
-        int aux = path[i] - square[2];
-        path2.at(i-k) = aux;
-        if(path2.at(i-k) == 0){
+        int aux = path[x-i] - square[2];
+        path2.at(x-i-k) = aux;
+        if(path2.at(x-i-k) == 0){
           if(path2.size() == 1){
             cout << "finish" << endl;
-            counter+=1;
-            continue;
+            counter++;
           }
           else{
             path2.erase(path2.begin());
@@ -101,7 +108,10 @@ unsigned long long findOptions(vector<int> path){
       path2 = path;
       k=0;
     }
-
+  }
+  if(path2.size() != 1 && path2.at(0) == 0){
+    path2.erase(path2.begin());
+    counter += findOptions(path2);
   }
   return counter;
 }
