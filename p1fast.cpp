@@ -10,6 +10,7 @@ using namespace std;
 
 unsigned int _N, _M;
 vector<int> _path; 
+vector<vector<int>> map = {};
 
 void readGraph()
 {
@@ -78,6 +79,16 @@ int maxValue(vector<int> path){
   int value;
   value = *max_element(path.begin(), path.end());
   return value;
+}
+
+int encontraNoMapa(vector<int> path){
+  for(int i = map.size()-1;i > 0;i--){
+    if(path == map[i]){
+      return map[i][2];
+    }
+  }
+  return -1;
+
 }
 
 unsigned long long findOptions(vector<int> path){
