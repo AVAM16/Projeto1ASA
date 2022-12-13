@@ -4,6 +4,7 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -75,7 +76,7 @@ int squareOverlap(array<int, 3> Square1, array<int, 3> Square2)
 
 int maxValue(vector<int> path){
   int value;
-  value = *path.max_element(path.begin(),path.end());
+  value = *max_element(path.begin(), path.end());
   return value;
 }
 
