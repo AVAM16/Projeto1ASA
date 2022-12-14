@@ -11,7 +11,7 @@ using namespace std;
 
 unsigned int _N, _M;
 vector<int> _path; 
-map<vector<int>,long long> Map;
+map<vector<int>,unsigned long long> Map;
 
 void readGraph()
 {
@@ -62,7 +62,7 @@ int maxValue(vector<int> path){
   return 124;
 }
 
-void addToMap(vector<int> path,int combinations){
+void addToMap(vector<int> path,unsigned long long combinations){
   Map.insert(pair<vector<int>,int>(path,combinations));
 }
 
@@ -75,7 +75,7 @@ int encontraNoMapa(vector<int> path){
 
 unsigned long long findOptions(vector<int> path){
   int x = 0;
-  long long k = 0;
+  unsigned long long k = 0;
   unsigned long long counter = 0;
   vector<int> path2(path);
   x = maxValue(path);
@@ -101,14 +101,14 @@ unsigned long long findOptions(vector<int> path){
         }
         k=0;
       }
-      if(encontraNoMapa(path2)){
-        unsigned long long aux = findOptions(path2);
-        counter += aux;
+      unsigned long long aux1 = encontraNoMapa(path2);
+      if(aux1){
+        unsigned long long aux2 = findOptions(path2);
+        counter += aux2;
         addToMap(path2,counter);
       }
       else{
-        unsigned long long aux = encontraNoMapa(path2);
-        counter += aux;
+        counter += aux1;
       }
       
       path2 = path;
