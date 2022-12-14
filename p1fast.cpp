@@ -67,7 +67,7 @@ void addToMap(vector<int> path,unsigned long long combinations){
 }
 
 int encontraNoMapa(vector<int> path){
-  if(Map[path] != 0){
+  if(Map.find(path) != Map.end()){
     return Map[path];
   }
   return -1;
@@ -75,7 +75,7 @@ int encontraNoMapa(vector<int> path){
 
 unsigned long long findOptions(vector<int> path){
   int x = 0;
-  unsigned long long k = 0;
+  int k = 0;
   unsigned long long counter = 0;
   vector<int> path2(path);
   x = maxValue(path);
@@ -102,10 +102,10 @@ unsigned long long findOptions(vector<int> path){
         k=0;
       }
       unsigned long long aux1 = encontraNoMapa(path2);
-      if(aux1){
+      if(aux1 == -1){
         unsigned long long aux2 = findOptions(path2);
         counter += aux2;
-        addToMap(path2,counter);
+        addToMap(path2,aux2);
       }
       else{
         counter += aux1;
