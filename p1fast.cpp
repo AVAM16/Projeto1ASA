@@ -11,7 +11,7 @@ using namespace std;
 
 unsigned int _N, _M;
 vector<int> _path; 
-map<vector<int>,int> Map = {};
+map<vector<int>,long long> Map;
 
 void readGraph()
 {
@@ -75,11 +75,10 @@ int encontraNoMapa(vector<int> path){
 
 unsigned long long findOptions(vector<int> path){
   int x = 0;
-  int k = 0;
+  long long k = 0;
   unsigned long long counter = 0;
   vector<int> path2(path);
   x = maxValue(path);
-  cout << "oi" << endl;
   vector<array<int,3>> squares = findAllPossibleSquaresPoint2(x, path[x]-1, path);
   vector<array<int,3>> aux;
   if(squares.size() != 0){
